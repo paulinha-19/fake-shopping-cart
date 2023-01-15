@@ -1,12 +1,12 @@
 import React from 'react';
-import { Toolbar } from "@mui/material";
 import { Products } from "../../components/Products/index";
+import { useGetAllProductsQuery } from '../../features/api/shopApiSlice';
 
 export const Home = () => {
+  const { data, error, isLoading, isFetching } = useGetAllProductsQuery();
   return (
     <div >
-      <Toolbar />
-      <Products />
+      <Products data={data} error={error} isLoading={isLoading} isFetching={isFetching} />
     </div>
   )
 }

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Box } from "@mui/material";
-import { useGetAllProductsQuery } from '../../features/api/shopApiSlice';
+import { Box, Toolbar } from "@mui/material";
 import { ProductItem } from './ProductItem';
 
-export const Products = () => {
-  const { data, error, isLoading, isFetching } = useGetAllProductsQuery();
+export const Products = ({ data, error, isLoading, isFetching }) => {
   return (
     <Box>
+      <Toolbar />
       {isLoading || isFetching ? (
         <p>Carregando os produtos...</p>
       ) : error ? (

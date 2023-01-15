@@ -6,7 +6,6 @@ import styled from 'styled-components';
 const Span = styled.span`
 font-weight: bold;
 `
-
 export const ProductItem = ({ id, name, price, rating, image, title, category }) => {
     return (
         <Box
