@@ -1,7 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Toolbar } from "@mui/material";
+import { Products } from "../../components/Products/index";
 
 export const Home = () => {
   return (
-    <div>Home</div>
+    <div >
+      <Toolbar />
+      <Products />
+    </div>
   )
 }

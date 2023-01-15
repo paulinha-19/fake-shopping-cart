@@ -1,12 +1,17 @@
-
+import { Routes } from "./routes";
+import { NavBar } from "./components/index";
+import themeSystem from "./shared/themes/themeSystem";
+import { ThemeProvider } from "@mui/material";
+import "./App.css";
 
 function App() {
-
-
   return (
-    <div className="App">
-     Teste
-    </div>
+    <ThemeProvider theme={themeSystem}>
+      <div className="App">
+        <NavBar />
+        <Routes />
+      </div>
+    </ThemeProvider>
   )
 }
 
