@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { useGetSingleProductQuery } from "../../features/api/shopApiSlice";
 import { addItemCart } from "../../features/cart/cartSlice";
-import { useNavigate } from "react-router";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Rating, Stack } from "@mui/material";
+import { Rating, Box, Grid, Typography, Button } from "@mui/material";
+import Span from '../../assets/styles/Span';
 
 export const ProductDetails = () => {
   const navigate = useNavigate();
@@ -30,44 +30,63 @@ export const ProductDetails = () => {
     setIsHover(false);
   };
   return (
-    <div className="home-container">
+    <Box>
       {isLoading || isFetching ? (
-        <p>Loading...</p>
+        <p>Carregando os detalhes do produto...</p>
       ) : error ? (
-        <p>Unexpected error occured...</p>
+        <p>Ocorreu um erro :\</p>
       ) : (
-        <>
-          <div className="products">
-            <div key={data.id} className="product">
-              <h3>{data.title}</h3>
-              <img src={data.image} alt={data.name} />
-              <div className="details">
-                <span>{data.description}</span>
-                <span className="price">${data.price}</span>
-                <Stack spacing={1}>
-                  <Rating
-                    name="half-rating-read"
-                    defaultValue={data.rating.rate}
-                    precision={0.5}
-                    readOnly
-                  />
-                  {/* <span>{data.rating.count}</span> */}
-                </Stack>
-              </div>
-
-              <button
-                className="btn btn-success"
+        <Grid container key={data.id} sx={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+          <Grid item xs={12} sm={8} md={6} lg={4} xl={2}
+            sx={{
+              maxWidth: {
+                xs: "200px",
+                sm: "250px",
+                md: "280px",
+                lg: "350px",
+                xl: "400px"
+              },
+            }}
+          >
+            <img src={data.image} alt={data.title}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain"
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={8} md={6} lg={4} xl={2} sx={{ px: 2 }}>
+            <Box sx={{ display: "flex", height: "400px", flexDirection: "column", justifyContent: "center" }}>
+              <Typography variant='h6' sx={{ textAlign: "justify" }}>{data.title}</Typography>
+              <Typography variant="overline">Categoria: {data.category}</Typography>
+              <Span>Sobre o item:</Span>
+              <Typography variant="body2" sx={{ textAlign: "justify" }}>{data.description}</Typography>
+              <Box sx={{ mt: 2, display: "flex" }}>
+                <Rating
+                  sx={{ color: "#FFA41C" }}
+                  name="half-rating-read"
+                  defaultValue={data.rating.rate}
+                  precision={0.5}
+                  readOnly
+                />
+                <Span>({data.rating.rate})</Span>
+              </Box>
+              <Span style={{ marginTop: 15 }}>R${data.price}</Span>
+              <Button
+                sx={{ mt: 3 }}
+                color="success"
+                variant='contained'
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onClick={() => handleAddToCart(data)}
               >
                 {isHover ? <AddShoppingCartIcon /> : "Adicionar ao carrinho"}
-              </button>
-              <br />
-            </div>
-          </div>
-        </>
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       )}
-    </div>
+    </Box>
   )
 }

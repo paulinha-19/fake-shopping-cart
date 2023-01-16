@@ -1,11 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Rating, Box, Typography } from "@mui/material";
-import styled from 'styled-components';
+import Span from '../../assets/styles/Span';
 
-const Span = styled.span`
-font-weight: bold;
-`
 export const ProductItem = ({ id, name, price, rating, image, title, category }) => {
     return (
         <Box
