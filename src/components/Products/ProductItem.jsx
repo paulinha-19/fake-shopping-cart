@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Rating, Box, Typography } from "@mui/material";
-import Span from '../../assets/styles/Span';
+import {Span} from '../../assets/styles/Span';
 
 export const ProductItem = ({ id, name, price, rating, image, title, category }) => {
     return (

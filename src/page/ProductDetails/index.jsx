@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { useGetSingleProductQuery } from "../../features/api/shopApiSlice";
-import { addItemCart } from "../../features/cart/cartSlice";
+import { useGetSingleProductQuery } from "../../services/features/api/shopApiSlice";
+import { addItemCart } from "../../services/features/cart/cartSlice";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Rating, Box, Grid, Typography, Button } from "@mui/material";
-import Span from '../../assets/styles/Span';
+import { Rating, Box, Grid, Typography, Button, Toolbar } from "@mui/material";
+import { Span } from '../../assets/styles/Span';
+import { Loading } from "../../components/FeedbackToUser/Loading";
+import { AlertToUser } from "../../components/FeedbackToUser/AlertToUser";
 
 export const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [isHover, setIsHover] = useState(false);
   const dispatch = useDispatch();
-  const { data, error, isLoading, isFetching } = useGetSingleProductQuery(
+  const { data, error, isError, isLoading, isFetching } = useGetSingleProductQuery(
     productId
   );
 
@@ -31,10 +33,12 @@ export const ProductDetails = () => {
   };
   return (
     <Box>
-      {isLoading || isFetching ? (
-        <p>Carregando os detalhes do produto...</p>
-      ) : error ? (
-        <p>Ocorreu um erro :\</p>
+      <Toolbar />
+      {/* <div>{isFetching ? 'Fetching...' : null}</div> */}
+      {isLoading ? (
+        <Loading />
+      ) : isError ? (
+        <AlertToUser error={error} variant="filled" severity="error" />
       ) : (
         <Grid container key={data.id} sx={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
           <Grid item xs={12} sm={8} md={6} lg={4} xl={2}

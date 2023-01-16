@@ -1,15 +1,17 @@
 import React from 'react';
-import { Box, Toolbar } from "@mui/material";
+import { Box, Toolbar, Alert } from "@mui/material";
 import { ProductItem } from './ProductItem';
+import { Loading } from "../FeedbackToUser/Loading";
+import { AlertToUser } from "../FeedbackToUser/AlertToUser";
 
-export const Products = ({ data, error, isLoading, isFetching }) => {
+export const Products = ({ data, error, isError, isLoading, isFetching }) => {
   return (
     <Box>
       <Toolbar />
-      {isLoading || isFetching ? (
-        <p>Carregando os produtos...</p>
-      ) : error ? (
-        <p>Ocorreu um erro :\</p>
+      {isLoading ? (
+        <Loading />
+      ) : isError ? (
+        <AlertToUser error={error} variant="filled" severity="error" />
       ) : (
         <Box
           sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
@@ -17,6 +19,7 @@ export const Products = ({ data, error, isLoading, isFetching }) => {
           {data?.map((product) => (
             <ProductItem key={product.id} {...product} />
           ))}
+          {/* <div>{isFetching ? 'Fetching...' : null}</div> */}
         </Box>
       )}
     </Box>

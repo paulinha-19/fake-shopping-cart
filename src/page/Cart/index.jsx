@@ -9,7 +9,7 @@ import {
   decreaseItemCart,
   getTotalCart,
   removeItemCart
-} from "../../features/cart/cartSlice";
+} from "../../services/features/cart/cartSlice";
 
 export const Cart = () => {
   const cart = useSelector((state) => state.cart);

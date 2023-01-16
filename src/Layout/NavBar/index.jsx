@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useGetAllCategoriesQuery } from "../../features/api/shopApiSlice";
+import { useGetAllCategoriesQuery } from "../../services/features/api/shopApiSlice";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
