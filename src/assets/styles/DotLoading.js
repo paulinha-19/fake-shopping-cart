@@ -7,7 +7,7 @@ export const LoadingWrapper = styled.div`
   justify-content: center;
 `
 
-export const Dot = styled.div`
+export const DotLoading = styled.div`
   background-color: black;
   border-radius: 50%;
   width: 0.25rem;

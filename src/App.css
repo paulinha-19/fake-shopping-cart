@@ -250,7 +250,7 @@ img {
   font-weight: 200;
   margin: 0.5rem 0;
 }
-.cart-checkout button {
+/* .cart-checkout button {
   width: 100%;
   height: 40px;
   border-radius: 5px;
@@ -261,7 +261,7 @@ img {
   border: none;
   outline: none;
   cursor: pointer;
-}
+} */
 .continue-shopping,
 .start-shopping {
   margin-top: 1rem;

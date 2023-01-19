@@ -66,40 +66,40 @@ export const Cart = () => {
           </div>
           <div className="cart-items">
             {cart.cartItems.map((cartItem) => (
-                <div className="cart-item" key={cartItem.id}>
-                  <div className="cart-product">
-                    <img src={cartItem.image} alt={cartItem.name} />
-                    <div>
-                      <h3>{cartItem.name}</h3>
-                      <p>{cartItem.desc}</p>
-                      <p>
-                        <Link
-                          className="btn btn-default"
-                          to={`/details/${cartItem.id}`}
-                        >
-                          View Details
-                        </Link>
-                      </p>
-                      <button onClick={() => handleRemoveItemCart(cartItem)}>
-                        Remover tudo
-                      </button>
-                    </div>
-                  </div>
-                  <div className="cart-product-price">${cartItem.price}</div>
-                  <div className="cart-product-quantity">
-                    <button onClick={() => handleDecreaseItemCart(cartItem)}>
-                      -
+              <div className="cart-item" key={cartItem.id}>
+                <div className="cart-product">
+                  <img src={cartItem.image} alt={cartItem.name} />
+                  <div>
+                    <h3>{cartItem.name}</h3>
+                    <p>{cartItem.desc}</p>
+                    <p>
+                      <Link
+                        className="btn btn-default"
+                        to={`/details/${cartItem.id}`}
+                      >
+                        View Details
+                      </Link>
+                    </p>
+                    <button onClick={() => handleRemoveItemCart(cartItem)}>
+                      Remover tudo
                     </button>
-                    <div className="count">{cartItem.cartQuantity}</div>
-                    <button onClick={() => handleIncreasingItemCart(cartItem)}>
-                      +
-                    </button>
-                  </div>
-                  <div className="cart-product-total-price">
-                    ${cartItem.price * cartItem.cartQuantity}
                   </div>
                 </div>
-              ))}
+                <div className="cart-product-price">${cartItem.price}</div>
+                <div className="cart-product-quantity">
+                  <button onClick={() => handleDecreaseItemCart(cartItem)}>
+                    -
+                  </button>
+                  <div className="count">{cartItem.cartQuantity}</div>
+                  <button onClick={() => handleIncreasingItemCart(cartItem)}>
+                    +
+                  </button>
+                </div>
+                <div className="cart-product-total-price">
+                  ${cartItem.price * cartItem.cartQuantity}
+                </div>
+              </div>
+            ))}
           </div>
           <div className="cart-summary">
             <button className="clear-btn" onClick={() => handleClearCart()}>
