@@ -2,7 +2,6 @@ import { Routes } from "./routes";
 import { NavBar } from "./Layout/index";
 import themeSystem from "./shared/themes/themeSystem";
 import { ThemeProvider} from "@mui/material";
-import "./App.css";
 
 function App() {
   return (

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Toolbar, Alert } from "@mui/material";
 import { ProductItem } from './ProductItem';
-import { Loading } from "../FeedbackToUser/Loading";
-import { AlertToUser } from "../FeedbackToUser/AlertToUser";
+import { Loading, AlertToUser } from "../FeedbackToUser";
 
 export const Products = ({ data, error, isError, isLoading, isFetching }) => {
   return (

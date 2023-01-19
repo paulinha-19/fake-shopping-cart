@@ -12,21 +12,21 @@ export const SubTotal = () => {
         dispatch(clearCart());
     };
     return (
-        <Card elevation={15}>
-            <CardContent>
+        <Card elevation={15} sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+            <CardContent >
                 <Typography sx={{ display: "inline" }}>
                     Subtotal ({cart.cartTotalQuantity} itens):
                 </Typography>
-                <Span>R$ {cart.cartTotalAmount}</Span>
+                <Span> R$ {cart.cartTotalAmount}</Span>
             </CardContent>
-            <CardActions>
+            <CardActions >
+                <Button color='success' variant='contained'>Fechar pedido</Button>
+            </CardActions>
+            {/* <CardActions>
                 <Button color="error" variant='contained' onClick={() => handleClearCart()}>
                     Limpar carrinho
                 </Button>
-            </CardActions>
-            <CardActions>
-                <Button color='success' variant='contained'>Fechar pedido</Button>
-            </CardActions>
+            </CardActions> */}
         </Card>
     )
 }

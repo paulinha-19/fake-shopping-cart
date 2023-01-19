@@ -6,9 +6,8 @@ import { useGetSingleProductQuery } from "../../services/features/api/shopApiSli
 import { addItemCart } from "../../services/features/cart/cartSlice";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Rating, Box, Grid, Typography, Button, Toolbar } from "@mui/material";
-import { Span } from '../../assets/styles/Span';
-import { Loading } from "../../components/FeedbackToUser/Loading";
-import { AlertToUser } from "../../components/FeedbackToUser/AlertToUser";
+import { Span } from '../../assets/styles';
+import { Loading, AlertToUser } from "../../components/FeedbackToUser";
 
 export const ProductDetails = () => {
   const navigate = useNavigate();
