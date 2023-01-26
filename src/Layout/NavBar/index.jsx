@@ -27,45 +27,23 @@ import { useSelector } from "react-redux";
 import { useGetAllCategoriesQuery } from "../../services/features/api/shopApiSlice";
 import { styled as styledMui, alpha } from "@mui/material/styles";
 import styled, { keyframes } from "styled-components";
+import { SearchInput } from './SearchInput';
 
 const drawerWidth = 240;
 
 const Search = styledMui("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 1),
     "&:hover": {
-        backgroundColor: alpha(theme.palette.common.white, 0.25)
+        backgroundColor: alpha(theme.palette.common.white, 0.95)
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("md")]: {
         marginLeft: theme.spacing(3),
         width: "auto"
-    }
-}));
-
-const SearchIconWrapper = styledMui("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-}));
-
-const StyledInputBase = styledMui(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("md")]: {
-            width: "20ch"
-        }
     }
 }));
 
@@ -132,14 +110,17 @@ export const NavBar = () => {
         setCategoriesOpen(false);
     };
 
-    // const handleCategoriesChange = (event, value) => {
-    //     setCategoriesOpen(event.currentTarget);
-    //     console.log("VALUE: ", value);
-    // };
-
     const drawer = (
-        <Box sx={{ textAlign: "center" }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
+        <Box>
+            <IconButton onClick={handleDrawerToggle}
+                sx={{ position: "relative" }}
+            >
+                <CloseIcon
+                    sx={{ position: "absolute", left: 210, top: 7 }}
+                />
+            </IconButton>
+            <Divider sx={{ marginTop: 3 }} />
+            <Typography variant="h6" sx={{ my: 2, textAlign: "center" }}>
                 <Link
                     style={{ textDecoration: "none", color: "#000" }}
                     to="/"
@@ -206,13 +187,7 @@ export const NavBar = () => {
                         </Link>
                     </Typography>
                     <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ "aria-label": "search" }}
-                        />
+                        <SearchInput />
                     </Search>
                     <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
                         <Button
@@ -248,16 +223,14 @@ export const NavBar = () => {
                         </Menu>
                     </Box>
                     <Link to="/cart">
-                        <div className="nav-bag">
-                            <NavIconWrapper>
-                                <Bubble animateTotalCart={animateTotalCart}>
-                                    {cartTotalQuantity}
-                                </Bubble>
-                                <IconButton sx={{ color: "background.paper" }}>
-                                    <ShoppingCartIcon fontSize="large" />
-                                </IconButton>
-                            </NavIconWrapper>
-                        </div>
+                        <NavIconWrapper>
+                            <Bubble animateTotalCart={animateTotalCart}>
+                                {cartTotalQuantity}
+                            </Bubble>
+                            <IconButton sx={{ color: "background.paper" }}>
+                                <ShoppingCartIcon fontSize="large" />
+                            </IconButton>
+                        </NavIconWrapper>
                     </Link>
                 </Toolbar>
             </AppBar>
