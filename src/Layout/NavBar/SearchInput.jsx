@@ -10,8 +10,7 @@ export const SearchInput = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {
-        searchTerm,
-        filteredData
+        searchTerm
     } = useSelector((state) => state.search);
 
     const handleChangeSearch = (e) => {
