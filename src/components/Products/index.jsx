@@ -3,7 +3,7 @@ import { Box, Toolbar, Alert } from "@mui/material";
 import { ProductItem } from './ProductItem';
 import { Loading, AlertToUser } from "../FeedbackToUser";
 
-export const Products = ({ data, error, isError, isLoading, isFetching }) => {
+export const Products = ({ data, error, isError, isLoading }) => {
   return (
     <Box>
       <Toolbar />

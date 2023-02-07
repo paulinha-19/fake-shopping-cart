@@ -2,9 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
-  cartItems: localStorage.getItem("cartItems")
-    ? JSON.parse(localStorage.getItem("cartItems"))
-    : [],
+  cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
   cartTotalQuantity: 0,
   cartTotalAmount: 0
 };
@@ -14,49 +12,34 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItemCart(state, action) {
-      const existingIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+      const { id, ...itemProperties } = action.payload;
+      const itemInCart = state.cartItems.findIndex(
+        (item) => item.id === id
       );
-
-      if (existingIndex >= 0) {
-        state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1 //0
+      if (itemInCart >= 0) {
+        const updatedItem = {
+          ...state.cartItems[itemInCart],
+          cartQuantity: state.cartItems[itemInCart].cartQuantity + 1
         };
-        toast.info("Already aded on cart", {
-          position: "top-left"
-        });
+        state.cartItems[itemInCart] = updatedItem;
       } else {
-        let tempProductItem = { ...action.payload, cartQuantity: 1 };
-        state.cartItems.push(tempProductItem);
-        toast.success(`${action.payload.title} Added on cart`, {
-          position: "top-left"
-        });
+        state.cartItems.push({ id, ...itemProperties, cartQuantity: 1 });
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
 
-    increasingItemCart(state, action) {
-      const existingIndex2 = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+    increaseItemInCart(state, action) {
+      const { id, ...itemProperties } = action.payload;
+      const existingItemIndex = state.cartItems.findIndex(
+        item => item.id === id
       );
-
-      if (existingIndex2 >= 0) {
-        state.cartItems[existingIndex2] = {
-          ...state.cartItems[existingIndex2],
-          cartQuantity: state.cartItems[existingIndex2].cartQuantity + 1
-        };
-        toast.info(
-          `You have Added ${action.payload.cartQuantity + 1} Quenty `,
-          {
-            position: "top-left"
-          }
-        );
+      if (existingItemIndex >= 0) {
+        state.cartItems[existingItemIndex].cartQuantity += 1;
       } else {
-        let tempProductItem = { ...action.payload, cartQuantity: 1 };
-        state.cartItems.push(tempProductItem);
-        toast.success(`${action.payload.name} Added on cart`, {
-          position: "top-left"
+        state.cartItems.push({
+          ...itemProperties,
+          id,
+          cartQuantity: 1
         });
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -65,7 +48,6 @@ const cartSlice = createSlice({
       const itemIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
 
@@ -87,41 +69,27 @@ const cartSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeItemCart(state, action) {
-      state.cartItems.map((cartItem) => {
-        if (cartItem.id === action.payload.id) {
-          const nextCartItems = state.cartItems.filter(
-            (item) => item.id !== cartItem.id
-          );
-
-          state.cartItems = nextCartItems;
-
-          toast.error("Produto removido totalmente do carrinho", {
-            position: "top-left"
-          });
-        }
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-        return state;
-      });
-    },
-    getTotalCart(state, action) {
-      let { total, quantity } = state.cartItems.reduce(
-        (cartTotal, cartItem) => {
-          const { price, cartQuantity } = cartItem;
-          const itemTotal = price * cartQuantity;
-          cartTotal.total += itemTotal;
-          cartTotal.quantity += cartQuantity;
-          return cartTotal;
-        },
-        {
-          total: 0,
-          quantity: 0
-        }
+      const nextCartItems = state.cartItems.filter(
+        (cartItem) => cartItem.id !== action.payload.id
       );
-      total = parseFloat(total.toFixed(2));
-      state.cartTotalQuantity = quantity;
-      state.cartTotalAmount = total;
+      localStorage.setItem("cartItems", JSON.stringify(nextCartItems));
+      return {
+        ...state,
+        cartItems: nextCartItems
+      };
     },
-    clearCart(state, action) {
+    getTotalCart(state) {
+      const { cartItems } = state;
+      let total = 0;
+      let quantity = 0;
+      cartItems.forEach(({ price, cartQuantity }) => {
+        total += price * cartQuantity;
+        quantity += cartQuantity;
+      });
+      state.cartTotalAmount = parseFloat(total.toFixed(2));
+      state.cartTotalQuantity = quantity;
+    },
+    clearCart(state) {
       state.cartItems = [];
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       toast.error("O carrinho foi limpo", { position: "top-left" });
@@ -131,7 +99,7 @@ const cartSlice = createSlice({
 
 export const {
   addItemCart,
-  increasingItemCart,
+  increaseItemInCart,
   decreaseItemCart,
   removeItemCart,
   getTotalCart,

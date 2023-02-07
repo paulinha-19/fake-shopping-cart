@@ -1,2 +1,2 @@
 export * from './Products/index';
-export * from './Search/index';
+export * from '../page/Search/index';

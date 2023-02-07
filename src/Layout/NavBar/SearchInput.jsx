@@ -1,29 +1,30 @@
-import React, { useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, TextField, InputAdornment } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import SearchIcon from "@mui/icons-material/Search";
-import { useGetAllProductsQuery } from '../../services/features/api/shopApiSlice';
-import { SearchResult } from '../../components/Search';
+import { fetchData, setSearchTerm } from "../../services/features/search/searchSlice";
 
 export const SearchInput = () => {
-    const [searchProduct, setSearchProduct] = useState("");
-    const { data, error, isError, isLoading, isFetching } = useGetAllProductsQuery();
-    const handleChangeSearch = (event) => {
-        const { value } = event.target
-        setSearchProduct(value);
+    const [noResults, setNoResults] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {
+        searchTerm,
+        filteredData
+    } = useSelector((state) => state.search);
+
+    const handleChangeSearch = (e) => {
+        const { value } = e.target
+        if (!value) { // value !== ''
+            navigate("/search", { state: value, replace: true })
+        }
+        dispatch(setSearchTerm(value));
         console.log(value);
     };
-
-    const filterProducts = () => {
-        return data.filter((product) => {
-            return product.title.toLowerCase().includes(searchProduct.toLowerCase());
-        });
-    }
-
-    // const filterProduct = useMemo(() => {
-    //     return data.filter((product) => {
-    //         return product.title.toLowerCase().includes(searchProduct.toLowerCase());
-    //     })
-    // })
+    useEffect(() => {
+        dispatch(fetchData());
+    }, [dispatch]);
 
     return (
         <Box
@@ -38,7 +39,7 @@ export const SearchInput = () => {
                 }}
                 id="pesquisar-produto"
                 placeholder="Pesquisar"
-                value={searchProduct}
+                value={searchTerm}
                 onChange={handleChangeSearch}
                 InputProps={{
                     startAdornment: (

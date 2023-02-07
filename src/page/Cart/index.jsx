@@ -5,7 +5,7 @@ import { TextCenter, NewLink, Span } from '../../assets/styles';
 import { SubTotal } from './SubTotal';
 import { styled } from "@mui/material/styles";
 import {
-    increasingItemCart,
+    increaseItemInCart,
     decreaseItemCart,
     getTotalCart,
     removeItemCart
@@ -19,7 +19,7 @@ const Img = styled("img")({
 });
 
 
-export const New = () => {
+export const Cart = () => {
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export const New = () => {
     }, [cart, dispatch]);
 
     const handleIncreasingItemCart = (product) => {
-        dispatch(increasingItemCart(product));
+        dispatch(increaseItemInCart(product));
     };
     const handleDecreaseItemCart = (product) => {
         dispatch(decreaseItemCart(product));
